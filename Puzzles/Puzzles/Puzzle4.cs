@@ -5,28 +5,31 @@ public class Puzzle4 : PuzzleBase<IEnumerable<IEnumerable<string>>, int, int>
     protected override string Filename => "Input/puzzle-input-03.txt";
     protected override string PuzzleTitle => "--- Day 4: Passport Processing ---";
 
-    private bool ValidPassport(IEnumerable<string> data, int part = 1)
+    private static bool ValidPassport(IEnumerable<string> data, int part = 1)
     {
         var passportData = new Dictionary<string, string>();
         var requiredData = new[] { "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" };
         
         foreach (var line in data)
         {
+            if (string.IsNullOrEmpty(line)) continue;
+            
             var fields = line.Split(' ');
             foreach (var field in fields)
             {
-                if (string.IsNullOrEmpty(field)) continue;
                 var kvpair = field.Split(':');
                 passportData[kvpair[0]] = kvpair[1];
             }
         }
 
+        var keysPresent = requiredData.All(key => passportData.ContainsKey(key)); 
+        
         if (part == 1)
         {
-            return requiredData.All(key => passportData.ContainsKey(key));
+            return keysPresent;
         }
         
-        return requiredData.All(key => passportData.ContainsKey(key)) && ValidPassportValues(passportData);
+        return keysPresent && ValidPassportValues(passportData);
     }
 
     private static bool IsHex(string s)
@@ -39,7 +42,7 @@ public class Puzzle4 : PuzzleBase<IEnumerable<IEnumerable<string>>, int, int>
         return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f');
     }
     
-    private bool ValidPassportValues(Dictionary<string, string> passportData)
+    private static bool ValidPassportValues(Dictionary<string, string> passportData)
     {
         var byr = int.Parse(passportData["byr"]);
         if (!(passportData["byr"].Length == 4 && byr >= 1920 && byr <= 2002)) return false;
