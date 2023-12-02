@@ -2,7 +2,7 @@
 
 public class Puzzle4 : PuzzleBase<IEnumerable<IEnumerable<string>>, int, int>
 {
-    protected override string Filename => "Input/puzzle-input-03.txt";
+    protected override string Filename => "Input/puzzle-input-04.txt";
     protected override string PuzzleTitle => "--- Day 4: Passport Processing ---";
 
     private static bool ValidPassport(IEnumerable<string> data, int part = 1)
