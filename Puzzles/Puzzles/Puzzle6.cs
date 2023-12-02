@@ -10,7 +10,7 @@ public class Puzzle6 : PuzzleBase<IEnumerable<IEnumerable<string>>, int, int>
         return string.Join("", answeredQuestions).Distinct().Count();
     }
     
-    private int CountDistinctQuestions2(IEnumerable<string> answeredQuestions)
+    private static int CountDistinctCommonQuestions(IEnumerable<string> answeredQuestions)
     {
         answeredQuestions = answeredQuestions.ToArray();
         var commonAnswered = answeredQuestions.First().ToCharArray();
@@ -31,7 +31,7 @@ public class Puzzle6 : PuzzleBase<IEnumerable<IEnumerable<string>>, int, int>
     
     public override int PartTwo(IEnumerable<IEnumerable<string>> input)
     {
-        return input.Sum(CountDistinctQuestions2);
+        return input.Sum(CountDistinctCommonQuestions);
     }
     
     public override IEnumerable<IEnumerable<string>> Preprocess(IPuzzleInput input, int part = 1)
